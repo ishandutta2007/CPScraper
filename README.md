@@ -29,7 +29,7 @@ Below is a list of requirements and dependencies
 * [Python3](https://www.python.org) to run the tool
 * Clone the repository:
 ```
-git clone https://github.com/Mohd-3/CodeRetriever.git
+git clone https://github.com/ishandutta2007/CPScraper.git
 ```
 
 ### Dependencies
@@ -64,7 +64,7 @@ python3 main.py
 ```
 
 or to run in autopilot mode for codeforces
-populate [cf_userlist.txt](https://github.com/ishandutta2007/CodeRetriever/blob/master/cf_userlist.txt) with some userids.
+populate [cf_userlist.txt](https://github.com/ishandutta2007/CPScraper/blob/master/cf_userlist.txt) with some userids.
 ```
 cd CodeRetriever
 python3 cf_autopilot.py
@@ -92,8 +92,4 @@ starter.start()
 ```
 
 Codeforces password is only needed if `get_gym` is set to `True`, you can skip `password` if you want to get regular contest submissions only. Set `verbose` to `False` to run it without an output about status
-
-## Author
-
-* **Mohammed Al-Abdulhadi** - [Mohd-3](https://github.com/Mohd-3)
 

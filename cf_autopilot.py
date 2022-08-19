@@ -1,5 +1,6 @@
 from retriever import Retriever
 
+
 def main():
     with open("cf_userlist.txt") as file:
         lines = file.readlines()
@@ -8,5 +9,6 @@ def main():
             retriever = Retriever()
             retriever.start(cf_autopilot=True, userid=userid)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
