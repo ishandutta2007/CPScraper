@@ -157,53 +157,61 @@ class Retriever:
         self.split_gym = split_gym
         self.folders = folders
         self.verbose = verbose
-   
+
     @staticmethod
     def check_path(path):
         if not os.path.exists(path):
             os.makedirs(path)
-    
+
     @staticmethod
     def get_input(message):
         inp = ''
         while inp not in ('y', 'n'):
             inp = input(message).lower()
         return inp == 'y'
-    
-    def start(self):
-        if self.codeforces is None:
-            self.codeforces = self.get_input('Download codeforces submissions? [y/n]: ')
-        if self.codeforces:
-            if self.cf_handle is None:
-                self.cf_handle = input('Enter your codeforces handle: ').lower()
-            else:
-                self.cf_handle = self.cf_handle.lower()
-            if self.get_regular is None:
-                self.get_regular = self.get_input('Download regular contests submissions? [y/n]: ')
-            if self.get_gym is None:
-                self.get_gym = self.get_input('Download gym contests submissions? [y/n]: ')
-            if self.get_gym and self.cf_password is None:
-                self.cf_password = getpass('Password is needed for gym contests, please enter password of {} : '.format(self.cf_handle))
-            if self.split_gym is None:
-                if not self.get_gym:
-                    self.split_gym = True
+
+    def start(self, cf_autopilot=False, userid=None):
+        if cf_autopilot:
+            self.codeforces = True
+            self.cf_handle = userid.lower()
+            self.get_regular = True
+            self.get_gym = False
+            self.folders = True
+            self.codeforces_once_more = True
+        else:
+            if self.codeforces is None:
+                self.codeforces = self.get_input('Download codeforces submissions? [y/n]: ')
+            if self.codeforces:
+                if self.cf_handle is None:
+                    self.cf_handle = input('Enter your codeforces handle: ').lower()
                 else:
-                    self.split_gym = self.get_input('Separate regular and gym contests in different folders?: [y/n] ')
-            if self.folders is None:
-                    self.folders = self.get_input('Create folders separately for each contest? [y/n]: ')
-        if self.spoj is None:
-            self.spoj = self.get_input('Download spoj submissions? [y/n]: ')
-        if self.spoj:
-            if self.spoj_handle is None:
-                self.spoj_handle = input('Enter your spoj username: ').lower()
-            else:
-                self.spoj_handle = self.spoj_handle.lower()
-            if self.spoj_password is None:
-                self.spoj_password = getpass('Enter your spoj password: ')
+                    self.cf_handle = self.cf_handle.lower()
+                if self.get_regular is None:
+                    self.get_regular = self.get_input('Download regular contests submissions? [y/n]: ')
+                if self.get_gym is None:
+                    self.get_gym = self.get_input('Download gym contests submissions? [y/n]: ')
+                if self.get_gym and self.cf_password is None:
+                    self.cf_password = getpass('Password is needed for gym contests, please enter password of {} : '.format(self.cf_handle))
+                if self.split_gym is None:
+                    if not self.get_gym:
+                        self.split_gym = True
+                    else:
+                        self.split_gym = self.get_input('Separate regular and gym contests in different folders?: [y/n] ')
+                if self.folders is None:
+                        self.folders = self.get_input('Create folders separately for each contest? [y/n]: ')
+            if self.spoj is None:
+                self.spoj = self.get_input('Download spoj submissions? [y/n]: ')
+            if self.spoj:
+                if self.spoj_handle is None:
+                    self.spoj_handle = input('Enter your spoj username: ').lower()
+                else:
+                    self.spoj_handle = self.spoj_handle.lower()
+                if self.spoj_password is None:
+                    self.spoj_password = getpass('Enter your spoj password: ')
         if self.codeforces:
             while self.codeforces_once_more:
                 if self.verbose:
-                    print('Downloading codeforces submissions for : {}...'.format(self.cf_handle))
+                    print('Downloading codeforces submissions for : {} ...'.format(self.cf_handle))
                 self.gym_set = set()
                 self.contests_set = set()
                 with requests.Session() as self.req:
@@ -231,7 +239,10 @@ class Retriever:
                                 print("Codeforces submissions for the following problems weren't downloaded:")
                                 for error in set(self.errors):
                                     print(error)
-                            self.codeforces_once_more = self.get_input('Do you want to run one more time to download these {} submissions ? [y/n]: '.format(len(self.errors)))
+                            if cf_autopilot:
+                                self.codeforces_once_more = False
+                            else:
+                                self.codeforces_once_more = self.get_input('Do you want to run one more time to download these {} submissions ? [y/n]: '.format(len(self.errors)))
                         else:
                             self.codeforces_once_more = False
                         if self.verbose:
@@ -344,15 +355,15 @@ class Retriever:
             try:
                 if submission.get_problem() in self.downloaded or (submission.is_gym() and not self.get_gym) or (not submission.is_gym() and not self.get_regular):
                     if self.verbose:
-                        print('[{}/{}] Already Downloaded for Problem {}, Skipping :{}'.format(index, tot_submissions, submission.get_problem(), submission))
+                        print('[{}/{}][{}] Already Downloaded for Problem {}, Skipping :{}'.format(index, tot_submissions, self.cf_handle, submission.get_problem(), submission))
                     continue
                 if submission.get_verdict().upper() != "OK":
                     if self.verbose:
-                        print('[{}/{}] Verdict : {}, Skipping :{}'.format(index, tot_submissions, submission.get_verdict(), submission))
+                        print('[{}/{}][{}] Verdict : {}, Skipping :{}'.format(index, tot_submissions, self.cf_handle, submission.get_verdict(), submission))
                     continue
                 time.sleep(4)
                 if self.verbose:
-                    print('[{}/{}] Downloading --> {}'.format(index, tot_submissions, submission))
+                    print('[{}/{}][{}] Downloading --> {}'.format(index, tot_submissions, self.cf_handle, submission))
                 self.get_source_code(submission)
                 if self.result == '':
                     print(COLOR_FAIL + 'Source code fetch failed' + COLOR_ENDC)

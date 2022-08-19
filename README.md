@@ -57,9 +57,17 @@ pip3 install requests
 
 Navigate to the cloned repository's directory and run main.py
 
+to scrape for a specific user
 ```
 cd CodeRetriever
 python3 main.py
+```
+
+or to run in autopilot mode for codeforces
+populate [cf_userlist.txt](https://github.com/ishandutta2007/CodeRetriever/blob/master/cf_userlist.txt) with some userids.
+```
+cd CodeRetriever
+python3 cf_autopilot.py
 ```
 
 
