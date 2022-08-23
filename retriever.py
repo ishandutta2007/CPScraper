@@ -4,11 +4,16 @@ from bs4 import BeautifulSoup as bs
 from datetime import datetime
 import colorama
 import string
+import json
+import time
+import math
 
 colorama.init()
 
 COLOR_FAIL = "\033[91m"
 COLOR_ENDC = "\033[0m"
+
+cached_folder_path = "cached_api"
 
 
 class ErrorException(Exception):
@@ -289,11 +294,41 @@ class Retriever:
                                 self.check_path(
                                     os.path.join("codeforces", self.cf_handle)
                                 )
-                        self.data = self.req.get(
-                            "http://codeforces.com/api/user.status?handle={}".format(
+
+                        us_filename = "userstatus_handle_{}.json".format(self.cf_handle)
+                        if os.path.exists(cached_folder_path + "/" + us_filename):
+                            last_m_time = os.path.getmtime(
+                                cached_folder_path + "/" + us_filename
+                            )
+                            curent_time = time.time()
+                            time_elapsed = curent_time - last_m_time
+                            print(
+                                "File {} Last modified: {} (Time elapsed : {})".format(
+                                    us_filename, time.ctime(last_m_time), time_elapsed
+                                )
+                            )
+                        if (
+                            os.path.exists(cached_folder_path + "/" + us_filename)
+                            and time_elapsed < 10000
+                        ):
+                            print("Loading from file : {}".format(us_filename))
+                            with open(
+                                cached_folder_path + "/" + us_filename
+                            ) as json_file:
+                                self.data = json.load(json_file)
+                        else:
+                            us_api_endpoint = "http://codeforces.com/api/user.status?handle={}".format(
                                 self.cf_handle
                             )
-                        ).json()
+                            print("quering api : {}".format(us_api_endpoint))
+                            self.data = self.req.get(us_api_endpoint).json()
+                        if self.data["status"] != "OK":
+                            raise ErrorException("Error getting contests info.")
+                        else:
+                            with open(
+                                cached_folder_path + "/" + us_filename, "w"
+                            ) as outfile:
+                                json.dump(self.data, outfile)
                         self.get_submissions()
                         self.set_downloaded("codeforces", self.cf_handle)
                         if self.errors:
@@ -387,11 +422,34 @@ class Retriever:
 
     def get_info(self):
         for i, gym_status in enumerate(("false", "true")):
-            data = self.req.get(
-                "http://codeforces.com/api/contest.list?gym={}".format(gym_status)
-            ).json()
+            cl_filename = "contestlist_gym_{}.json".format(gym_status)
+            if os.path.exists(cached_folder_path + "/" + cl_filename):
+                last_m_time = os.path.getmtime(cached_folder_path + "/" + cl_filename)
+                curent_time = time.time()
+                time_elapsed = curent_time - last_m_time
+                print(
+                    "File {} Last modified: {} (Time elapsed : {})".format(
+                        cl_filename, time.ctime(last_m_time), time_elapsed
+                    )
+                )
+            if (
+                os.path.exists(cached_folder_path + "/" + cl_filename)
+                and time_elapsed < 10000
+            ):
+                print("Loading from file : {}".format(cl_filename))
+                with open(cached_folder_path + "/" + cl_filename) as json_file:
+                    data = json.load(json_file)
+            else:
+                cl_api_endpoint = (
+                    "http://codeforces.com/api/contest.list?gym={}".format(gym_status)
+                )
+                print("quering api : {}".format(cl_api_endpoint))
+                data = self.req.get(cl_api_endpoint).json()
             if data["status"] != "OK":
                 raise ErrorException("Error getting contests info.")
+            else:
+                with open(cached_folder_path + "/" + cl_filename, "w") as outfile:
+                    json.dump(data, outfile)
             for contest in data["result"]:
                 if i:
                     self.gym_set.add(contest["id"])
