@@ -309,7 +309,7 @@ class Retriever:
                             )
                         if (
                             os.path.exists(cached_folder_path + "/" + us_filename)
-                            and time_elapsed < 10000
+                            and time_elapsed < 100000
                         ):
                             print("Loading from file : {}".format(us_filename))
                             with open(
@@ -322,13 +322,12 @@ class Retriever:
                             )
                             print("quering api : {}".format(us_api_endpoint))
                             self.data = self.req.get(us_api_endpoint).json()
-                        if self.data["status"] != "OK":
-                            raise ErrorException("Error getting contests info.")
-                        else:
                             with open(
                                 cached_folder_path + "/" + us_filename, "w"
                             ) as outfile:
                                 json.dump(self.data, outfile)
+                        if self.data["status"] != "OK":
+                            raise ErrorException("Error getting contests info.")
                         self.get_submissions()
                         self.set_downloaded("codeforces", self.cf_handle)
                         if self.errors:
@@ -434,7 +433,7 @@ class Retriever:
                 )
             if (
                 os.path.exists(cached_folder_path + "/" + cl_filename)
-                and time_elapsed < 10000
+                and time_elapsed < 100000
             ):
                 print("Loading from file : {}".format(cl_filename))
                 with open(cached_folder_path + "/" + cl_filename) as json_file:
@@ -445,11 +444,10 @@ class Retriever:
                 )
                 print("quering api : {}".format(cl_api_endpoint))
                 data = self.req.get(cl_api_endpoint).json()
-            if data["status"] != "OK":
-                raise ErrorException("Error getting contests info.")
-            else:
                 with open(cached_folder_path + "/" + cl_filename, "w") as outfile:
                     json.dump(data, outfile)
+            if data["status"] != "OK":
+                raise ErrorException("Error getting contests info.")
             for contest in data["result"]:
                 if i:
                     self.gym_set.add(contest["id"])
