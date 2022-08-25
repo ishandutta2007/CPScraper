@@ -322,10 +322,11 @@ class Retriever:
                             )
                             print("quering api : {}".format(us_api_endpoint))
                             self.data = self.req.get(us_api_endpoint).json()
-                            with open(
-                                cached_folder_path + "/" + us_filename, "w"
-                            ) as outfile:
-                                json.dump(self.data, outfile)
+                            if self.data["status"] == "OK":
+                                with open(
+                                    cached_folder_path + "/" + us_filename, "w"
+                                ) as outfile:
+                                    json.dump(self.data, outfile)
                         if self.data["status"] != "OK":
                             raise ErrorException("Error getting contests info.")
                         self.get_submissions()
@@ -444,8 +445,9 @@ class Retriever:
                 )
                 print("quering api : {}".format(cl_api_endpoint))
                 data = self.req.get(cl_api_endpoint).json()
-                with open(cached_folder_path + "/" + cl_filename, "w") as outfile:
-                    json.dump(data, outfile)
+                if data["status"] == "OK":
+                    with open(cached_folder_path + "/" + cl_filename, "w") as outfile:
+                        json.dump(data, outfile)
             if data["status"] != "OK":
                 raise ErrorException("Error getting contests info.")
             for contest in data["result"]:
