@@ -167,6 +167,7 @@ class Retriever:
     def __init__(
         self,
         cf_handle=None,
+        cf_serial_no=None,
         cf_password=None,
         spoj_handle=None,
         spoj_password=None,
@@ -179,6 +180,7 @@ class Retriever:
         verbose=True,
     ):
         self.cf_handle = cf_handle
+        self.cf_serial_no = cf_serial_no
         self.cf_password = cf_password
         self.codeforces = codeforces
         self.codeforces_once_more = True
@@ -203,10 +205,11 @@ class Retriever:
             inp = input(message).lower()
         return inp == "y"
 
-    def start(self, cf_autopilot=False, userid=None):
+    def start(self, cf_autopilot=False, userid=None, cf_serial_no=None):
         if cf_autopilot:
             self.codeforces = True
             self.cf_handle = userid.lower()
+            self.cf_serial_no = cf_serial_no
             self.get_regular = True
             self.get_gym = False
             self.folders = True
@@ -510,10 +513,11 @@ class Retriever:
                 ):
                     if self.verbose:
                         print(
-                            "[{}/{}][{}] Already Downloaded for Problem {}, Skipping :{}".format(
+                            "[{}][{}][{}/{}] Already Downloaded for Problem {}, Skipping :{}".format(
+                                self.cf_serial_no,
+                                self.cf_handle,
                                 index,
                                 tot_submissions,
-                                self.cf_handle,
                                 submission.get_problem(),
                                 submission,
                             )
@@ -522,10 +526,11 @@ class Retriever:
                 if submission.get_verdict().upper() != "OK":
                     if self.verbose:
                         print(
-                            "[{}/{}][{}] Verdict : {}, Skipping :{}".format(
+                            "[{}][{}][{}/{}] Verdict : {}, Skipping :{}".format(
+                                self.cf_serial_no,
+                                self.cf_handle,
                                 index,
                                 tot_submissions,
-                                self.cf_handle,
                                 submission.get_verdict(),
                                 submission,
                             )
@@ -534,8 +539,12 @@ class Retriever:
                 time.sleep(4)
                 if self.verbose:
                     print(
-                        "[{}/{}][{}] Downloading --> {}".format(
-                            index, tot_submissions, self.cf_handle, submission
+                        "[{}][{}][{}/{}] Downloading --> {}".format(
+                            self.cf_serial_no,
+                            self.cf_handle,
+                            index,
+                            tot_submissions,
+                            submission,
                         )
                     )
                 self.get_source_code(submission)
