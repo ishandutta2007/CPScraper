@@ -13,6 +13,8 @@ colorama.init()
 COLOR_FAIL = "\033[91m"
 COLOR_ENDC = "\033[0m"
 
+API_WAIT_TIME = 1000000
+
 cached_folder_path = "cached_api"
 
 
@@ -309,7 +311,7 @@ class Retriever:
                             )
                         if (
                             os.path.exists(cached_folder_path + "/" + us_filename)
-                            and time_elapsed < 100000
+                            and time_elapsed < API_WAIT_TIME
                         ):
                             print("Loading from file : {}".format(us_filename))
                             with open(
@@ -434,7 +436,7 @@ class Retriever:
                 )
             if (
                 os.path.exists(cached_folder_path + "/" + cl_filename)
-                and time_elapsed < 100000
+                and time_elapsed < API_WAIT_TIME
             ):
                 print("Loading from file : {}".format(cl_filename))
                 with open(cached_folder_path + "/" + cl_filename) as json_file:
