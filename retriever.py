@@ -14,6 +14,7 @@ COLOR_FAIL = "\033[91m"
 COLOR_ENDC = "\033[0m"
 
 API_WAIT_TIME = 1000000
+SLEEP_BEFORE_CALL = 3.5
 
 cached_folder_path = "cached_api"
 
@@ -536,7 +537,7 @@ class Retriever:
                             )
                         )
                     continue
-                time.sleep(4)
+                time.sleep(SLEEP_BEFORE_CALL)
                 if self.verbose:
                     print(
                         "[{}][{}][{}/{}] Downloading --> {}".format(
