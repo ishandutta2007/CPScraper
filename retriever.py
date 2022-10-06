@@ -16,7 +16,8 @@ COLOR_ENDC = "\033[0m"
 API_WAIT_TIME = 1000000
 SLEEP_BEFORE_CALL = 3.5
 
-cached_folder_path = "cached_api"
+# root = "C:\\Users\\hp\\Documents\\Projects\\CPScraper\\"
+cached_folder_path = os.path.join("cached_api")
 
 
 class ErrorException(Exception):
