@@ -561,7 +561,7 @@ class Retriever:
                         flipper = Flipper()
                         flipper.automate_proton_vpn()
                     except Exception as e:
-                        print(e)
+                        print(COLOR_FAIL + e + COLOR_ENDC)
                         print("Sleeping {} secs".format(SLEEP_AFTER_FAIL))
                         time.sleep(SLEEP_AFTER_FAIL)
                     continue

@@ -81,7 +81,7 @@ class Flipper:
 
     def minimize(self):
         print("Minimizing ProtonVPN")
-        self.windows.send_keys(keys="{WIN}M")
+        self.windows.send_keys(keys="{ALT}{ESC}")
         time.sleep(3)
         # self.windows.close_current_window()
 
