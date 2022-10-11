@@ -14,7 +14,8 @@ COLOR_FAIL = "\033[91m"
 COLOR_ENDC = "\033[0m"
 
 API_WAIT_TIME = 1000000
-SLEEP_BEFORE_CALL = 3.5
+SLEEP_BEFORE_CALL = 0.125
+SLEEP_AFTER_FAIL = 32
 
 # root = "C:\\Users\\hp\\Documents\\Projects\\CPScraper\\"
 cached_folder_path = os.path.join("cached_api")
@@ -553,6 +554,8 @@ class Retriever:
                 if self.result == "":
                     print(COLOR_FAIL + "Source code fetch failed" + COLOR_ENDC)
                     self.errors.append(submission.get_problem())
+                    print("Sleeping {} secs".format(SLEEP_AFTER_FAIL))
+                    time.sleep(SLEEP_AFTER_FAIL)
                     continue
                 self.process_submission(submission)
             except Exception as e:
@@ -563,6 +566,8 @@ class Retriever:
                         + COLOR_ENDC
                     )
                 self.errors.append(submission.get_problem())
+                print("Sleeping {} secs".format(SLEEP_AFTER_FAIL))
+                time.sleep(SLEEP_AFTER_FAIL)
 
     def get_spoj_submissions(self):
         page = self.req.get("https://www.spoj.com/myaccount")

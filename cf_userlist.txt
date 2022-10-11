@@ -71,7 +71,6 @@ AutumnKite
 Belonogov
 saba2000
 Temotoloraia
-Radewoosh
 sevenkplus
 winger
 ivan.metelsky
@@ -90,11 +89,9 @@ Enchom
 EnEm
 SecondThread
 Monogon
-kostka
 kpw29
 TheScrasse
 sus
-FairyWinx
 AlexLuchianov
 SirRembocodina
 ivan100sic
@@ -729,6 +726,9 @@ ksun48
 maroonrk
 Um_nik
 Petr
+Radewoosh
+kostka
+FairyWinx
 greenheadstrange
 djq_cpp
 sunset
