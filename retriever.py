@@ -554,8 +554,16 @@ class Retriever:
                 if self.result == "":
                     print(COLOR_FAIL + "Source code fetch failed" + COLOR_ENDC)
                     self.errors.append(submission.get_problem())
-                    print("Sleeping {} secs".format(SLEEP_AFTER_FAIL))
-                    time.sleep(SLEEP_AFTER_FAIL)
+                    try:
+                        from flipper import Flipper
+
+                        print("Flipping IP")
+                        flipper = Flipper()
+                        flipper.automate_proton_vpn()
+                    except Exception as e:
+                        print(e)
+                        print("Sleeping {} secs".format(SLEEP_AFTER_FAIL))
+                        time.sleep(SLEEP_AFTER_FAIL)
                     continue
                 self.process_submission(submission)
             except Exception as e:
