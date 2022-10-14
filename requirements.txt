@@ -4,5 +4,12 @@ Pillow == 9.2.0
 beautifulsoup4 == 4.11.1
 colorama == 0.4.5
 requests == 2.28.1
-robotframework == 4.0.3
 termcolor == 2.0.1
+robotframework-sapguilibrary == 1.1
+robotframework-seleniumlibrary == 5.1.3
+robotframework-seleniumtestability == 1.1.0
+rpaframework == 9.6.0
+rpaframework-core == 10.0.0
+rpaframework-pdf == 0.5.1
+rpaframework-recognition == 0.7.0
+rpaframework-windows == 6.1.0
