@@ -87,15 +87,15 @@ class Flipper:
 
     def automate_proton_vpn(self):
         self.open_proton_vpn()
-        time.sleep(3)
+        time.sleep(1)
         self.take_control_of_proton_vpn()
         time.sleep(1)
         self.maximize_proton_vpn()
         time.sleep(1)
         self.connect()
-        time.sleep(3)
+        time.sleep(2)
         self.minimize_proton_vpn()
-        time.sleep(6)
+        time.sleep(13)
 
 
 if __name__ == "__main__":

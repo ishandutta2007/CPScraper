@@ -16,7 +16,7 @@ COLOR_ENDC = "\033[0m"
 API_WAIT_TIME = 1000000
 SLEEP_AFTER_LOGIN = 2
 SLEEP_BEFORE_CALL = 0.125
-SLEEP_AFTER_FAIL = 32
+SLEEP_AFTER_FAIL = 16
 
 # root = "C:\\Users\\hp\\Documents\\Projects\\CPScraper\\"
 cached_folder_path = os.path.join("cached_api")
