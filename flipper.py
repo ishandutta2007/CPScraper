@@ -54,41 +54,48 @@ class Flipper:
         self.windows.windows_run(
             "C:\\Program Files (x86)\\Proton Technologies\\ProtonVPN\\ProtonVPN.exe"
         )
-        pp.pprint(self.windows.__dict__)
-        time.sleep(13)
-        print("WINDOW LIST:")
-        pp.pprint(self.windows.list_windows())
-        proton_win = self.windows.control_window("type:WindowControl name:ProtonVPN")
-        print("ProtonVPN WINDOW Details:")
-        pp.pprint(proton_win.__dict__)
+        # pp.pprint(self.windows.__dict__)
+        # print("WINDOW LIST:")
+        # pp.pprint(self.windows.list_windows())
 
-        time.sleep(3)
+    def take_control_of_proton_vpn(self):
+        print("Controlling ProtonVPN")
+        proton_win = self.windows.control_window("type:WindowControl name:ProtonVPN")
+        # print("ProtonVPN WINDOW Details:")
+        # pp.pprint(proton_win.__dict__)
+
+    def maximize_proton_vpn(self):
+        print("Maximizing ProtonVPN")
         self.windows.send_keys(keys="{WIN}{UP}")
-        time.sleep(3)
-        print("ProtonVPN Button Details:")
-        buttons = self.windows.get_elements("type:Button")
-        for button in buttons:
-            pp.pprint(button.__dict__)
+        # print("ProtonVPN Button Details:")
+        # buttons = self.windows.get_elements("type:Button")
+        # for button in buttons:
+        #     pp.pprint(button.__dict__)
 
     def connect(self):
         print("Connecting to Random IP")
         desktop.move_mouse('ocr:"Random"')
-        time.sleep(1)
+        time.sleep(0.25)
         desktop.move_mouse("offset:175,0")
-        time.sleep(1)
+        time.sleep(0.25)
         desktop.click()
-        time.sleep(13)
 
-    def minimize(self):
+    def minimize_proton_vpn(self):
         print("Minimizing ProtonVPN")
         self.windows.send_keys(keys="{ALT}{ESC}")
-        time.sleep(3)
         # self.windows.close_current_window()
 
     def automate_proton_vpn(self):
         self.open_proton_vpn()
+        time.sleep(3)
+        self.take_control_of_proton_vpn()
+        time.sleep(1)
+        self.maximize_proton_vpn()
+        time.sleep(1)
         self.connect()
-        self.minimize()
+        time.sleep(3)
+        self.minimize_proton_vpn()
+        time.sleep(6)
 
 
 if __name__ == "__main__":

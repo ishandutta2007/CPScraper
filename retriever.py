@@ -14,6 +14,7 @@ COLOR_FAIL = "\033[91m"
 COLOR_ENDC = "\033[0m"
 
 API_WAIT_TIME = 1000000
+SLEEP_AFTER_LOGIN = 2
 SLEEP_BEFORE_CALL = 0.125
 SLEEP_AFTER_FAIL = 32
 
@@ -404,7 +405,7 @@ class Retriever:
     def login(self):
         page = self.req.get("https://codeforces.com/enter")
         soup = bs(page.text, "html.parser")
-        time.sleep(2)
+        time.sleep(SLEEP_AFTER_LOGIN)
         data = {}
         token = soup.find("input", {"name": "csrf_token"})["value"]
         data["handleOrEmail"] = self.cf_handle
@@ -539,7 +540,6 @@ class Retriever:
                             )
                         )
                     continue
-                time.sleep(SLEEP_BEFORE_CALL)
                 if self.verbose:
                     print(
                         "[{}][{}][{}/{}] Downloading --> {}".format(
@@ -616,6 +616,7 @@ class Retriever:
 
     def get_source_code(self, submission):
         contest_type = "gym" if submission.is_gym() else "contest"
+        time.sleep(SLEEP_BEFORE_CALL)
         page = self.req.get(
             self.get_url.format(
                 contest_type=contest_type,
@@ -623,7 +624,6 @@ class Retriever:
                 submission_id=submission.get_id(),
             )
         )
-        time.sleep(2)
         soup = bs(page.text, "html.parser")
         ret = soup.find(id="program-source-text")
         if ret is None:
