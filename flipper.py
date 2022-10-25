@@ -67,7 +67,7 @@ class Flipper:
     def maximize_proton_vpn(self):
         print("Maximizing ProtonVPN")
         self.windows.send_keys(keys="{WIN}{UP}")
-        # print("ProtonVPN Button Details:")
+        # print("ProtonVPN Button Details:")es\P
         # buttons = self.windows.get_elements("type:Button")
         # for button in buttons:
         #     pp.pprint(button.__dict__)
@@ -85,11 +85,28 @@ class Flipper:
         self.windows.send_keys(keys="{ALT}{ESC}")
         # self.windows.close_current_window()
 
-    def automate_proton_vpn(self):
+    def close_popup(self):
+        try:
+            print("Closing ProtonVPN Popoup")
+            desktop.move_mouse('ocr:"Attention"')
+            time.sleep(0.25)
+            desktop.move_mouse("offset:240,190")
+            time.sleep(0.25)
+            desktop.click()
+        except Exception as e:
+            print(e)
+            # print("Exiting ProtonVPN Window")
+            # self.windows.close_current_window()
+
+    def automate_proton_vpn(self, consecutive_errors=0):
+        print("consecutive_errors =", consecutive_errors)
         self.open_proton_vpn()
         time.sleep(1)
         self.take_control_of_proton_vpn()
         time.sleep(1)
+        if consecutive_errors > 1:
+            self.close_popup()
+            time.sleep(1)
         self.maximize_proton_vpn()
         time.sleep(1)
         self.connect()

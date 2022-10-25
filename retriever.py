@@ -196,6 +196,7 @@ class Retriever:
         self.split_gym = split_gym
         self.folders = folders
         self.verbose = verbose
+        self.consecutive_errors = 0
 
     @staticmethod
     def check_path(path):
@@ -553,26 +554,30 @@ class Retriever:
                 self.get_source_code(submission)
                 if self.result == "":
                     print(COLOR_FAIL + "Source code fetch failed" + COLOR_ENDC)
+                    self.consecutive_errors += 1
                     self.errors.append(submission.get_problem())
                     try:
                         from flipper import Flipper
 
                         print("Flipping IP")
                         flipper = Flipper()
-                        flipper.automate_proton_vpn()
+                        flipper.automate_proton_vpn(self.consecutive_errors)
                     except Exception as e:
-                        print(COLOR_FAIL + e + COLOR_ENDC)
+                        print(COLOR_FAIL + "E1." + e + COLOR_ENDC)
                         print("Sleeping {} secs".format(SLEEP_AFTER_FAIL))
                         time.sleep(SLEEP_AFTER_FAIL)
                     continue
                 self.process_submission(submission)
+                self.consecutive_errors = 0
             except Exception as e:
                 if self.verbose:
                     print(
                         COLOR_FAIL
+                        + "E2."
                         + "Exception occured:\n{}".format(str(e))
                         + COLOR_ENDC
                     )
+                self.consecutive_errors += 1
                 self.errors.append(submission.get_problem())
                 print("Sleeping {} secs".format(SLEEP_AFTER_FAIL))
                 time.sleep(SLEEP_AFTER_FAIL)
