@@ -42,7 +42,7 @@ def compact(lst):
 for i in range(1, 1 + MAX_ITERATIONS):
     if os.path.exists(".\\datetime(2022"):
         print("[{}]Running: rm .\\datetime(2022".format(i))
-        p = subprocess.Popen(["rm", "\'.\\datetime(2022\'"], stdout=subprocess.PIPE)
+        p = subprocess.Popen(["rm", "'.\\datetime(2022'"], stdout=subprocess.PIPE)
         out, err = p.communicate()
         outlist0 = out.decode("utf-8").split("\n")
         pp.pprint(outlist0)
@@ -96,7 +96,6 @@ for i in range(1, 1 + MAX_ITERATIONS):
             pass
     print(yellow("[{}]Done git add for modifiedlist".format(i)))
     print("=====")
-
 
     print("[{}]Initializing git add for deletedlist".format(i))
     deletedlist = deletedlist[:MAX_FILES_TO_ADD]
@@ -178,7 +177,7 @@ for i in range(1, 1 + MAX_ITERATIONS):
         print(cyan("[{}]Waiting {} secs....".format(i, WAIT_SEC)))
         time.sleep(WAIT_SEC)
         continue
-    freq = { x: message_selection_list.count(x) for x in message_selection_list }
+    freq = {x: message_selection_list.count(x) for x in message_selection_list}
     print(freq)
     max_key = max(freq, key=freq.get)
 
@@ -197,7 +196,9 @@ for i in range(1, 1 + MAX_ITERATIONS):
 
         if os.path.exists("{}/errors".format(elem)):
             print("[{}][{}]Running git add {}/errors".format(i, idx, elem))
-            p = subprocess.Popen(["git", "add", elem + "/errors"], stdout=subprocess.PIPE)
+            p = subprocess.Popen(
+                ["git", "add", elem + "/errors"], stdout=subprocess.PIPE
+            )
             out, err = p.communicate()
             print(out.decode("utf-8").split("\n"))
         else:
