@@ -10,13 +10,19 @@ import math
 
 colorama.init()
 
+HIGGSPEED = False
+
 COLOR_FAIL = "\033[91m"
 COLOR_ENDC = "\033[0m"
 
 API_WAIT_TIME = 1000000
 SLEEP_AFTER_LOGIN = 2
 SLEEP_BEFORE_CALL = 0.125
-SLEEP_AFTER_FAIL = 16
+
+if HIGGSPEED:
+    SLEEP_AFTER_FAIL = 0.0125
+else:
+    SLEEP_AFTER_FAIL = 16
 
 # root = "C:\\Users\\hp\\Documents\\Projects\\CPScraper\\"
 cached_folder_path = os.path.join("cached_api")
@@ -556,16 +562,17 @@ class Retriever:
                     print(COLOR_FAIL + "Source code fetch failed" + COLOR_ENDC)
                     self.consecutive_errors += 1
                     self.errors.append(submission.get_problem())
-                    try:
-                        from flipper import Flipper
+                    if HIGGSPEED == False:
+                        try:
+                            from flipper import Flipper
 
-                        print("Flipping IP")
-                        flipper = Flipper()
-                        flipper.automate_proton_vpn(self.consecutive_errors)
-                    except Exception as e:
-                        print(COLOR_FAIL + "E1." + e + COLOR_ENDC)
-                        print("Sleeping {} secs".format(SLEEP_AFTER_FAIL))
-                        time.sleep(SLEEP_AFTER_FAIL)
+                            print("Flipping IP")
+                            flipper = Flipper()
+                            flipper.automate_proton_vpn(self.consecutive_errors)
+                        except Exception as e:
+                            print(COLOR_FAIL + "E1." + e + COLOR_ENDC)
+                            print("Sleeping {} secs".format(SLEEP_AFTER_FAIL))
+                            time.sleep(SLEEP_AFTER_FAIL)
                     continue
                 self.process_submission(submission)
                 self.consecutive_errors = 0
