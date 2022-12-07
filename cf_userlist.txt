@@ -22,15 +22,12 @@ nealchen
 RAVEman
 zld3794955
 yfhuang
-veckoper
 Leafy
-sfiction
 SrO
 Dymonchyk
 Denisson
 Isaaaaaaac
 endless-chase
-pupiI
 Heart_Blue
 Memphis
 bidzilya
@@ -47,7 +44,6 @@ Delfad0r
 shangjingbo
 Hakiobo
 Johnny_2002
-kimden
 stgatilov
 szb
 kokokostya
@@ -79,7 +75,6 @@ xhk
 HanaElhami
 SOSCHINA
 JaroslavUrban
-_superay_
 cold_chair
 senpai_notice_me
 craborac
@@ -137,7 +132,6 @@ Antoine
 Zuza
 skywalkert
 faustaadp
-AghaTizi
 Gromah
 Namnamseo
 Infleaking
@@ -209,7 +203,6 @@ Jyt
 choutii
 boboniu
 love.zy
-WZYYN
 Asymmetry
 Jeel_Vaishnav
 Heaplax
@@ -2095,6 +2088,11 @@ k21
 Monyura
 l1ll5
 =========================SMALL_PROBLEMATIC_GUYS_BELOW==============================
+AghaTizi
+pupiI
+kimden
+_superay_
+veckoper
 Alif01
 yasugongshang
 Stilwell
@@ -2108,7 +2106,9 @@ abc864197532
 E869120
 74TrAkToR
 dacin21
+sfiction
 =========================PROBLEMATIC_GUYS_BELOW==================================
+WZYYN
 andrew.volchek
 SYury
 w4p3r
