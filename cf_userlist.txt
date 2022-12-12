@@ -37,8 +37,6 @@ t90tank
 gawry
 NightGlow
 NikaraBika
-Tinsane
-rxdoi
 wsyhb
 JasonLan
 siganai
@@ -51,7 +49,6 @@ samjia2000
 cyand1317
 cescmentation_folch
 realcomplex
-BeyondHeaven
 jiry_2
 bixind
 yarek
@@ -69,7 +66,6 @@ __sleep
 irkstepanov
 Hongzy
 yukihana0416
-Seemann
 tanphatls987
 lezdzh
 orbitingfIea
@@ -88,7 +84,6 @@ newbin
 yooooooooo
 Alyaly
 Jayce132
-Tweetuzki
 kostya_by
 Lebossle
 memset0c
@@ -2087,6 +2082,11 @@ poisonous
 Sutaner
 Howarli
 =========================SMALL_PROBLEMATIC_GUYS_BELOW==============================
+BeyondHeaven
+Tweetuzki
+Tinsane
+rxdoi
+Seemann
 AghaTizi
 pupiI
 kimden
